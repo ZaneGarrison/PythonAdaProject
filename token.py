@@ -21,6 +21,3 @@ class Token:
 
     def returnkeyword(self):
         return self.keyword
-
-
-

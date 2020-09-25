@@ -1,6 +1,7 @@
+#import logging
 from token import Token
 
-add = Token("+", 307, "add")
-
-
-print(add.returnid())
+try:
+    file = open("test1.jl", "r")
+except FileNotFoundError:
+    print("that file can't be accessed")
