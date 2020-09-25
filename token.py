@@ -1,37 +1,27 @@
-class token:
-    def __int__(self,v,id,kw):
-        self.value = v
+class Token:
+    def __int__(self, value, id, keyword):
+        self.value = value
         self.ID = id
-        self.keyword = kw
-""""   
-    def __init__(self):
-        self.value = 0
-        self.ID = 0
-        self.keyword = ""
+        self.keyword = keyword
 
-    def token(self,v,id,kw):
-        self.value = v
-        self.ID = id
-        self.keyword = kw
-"""
-    def setValue(self,v):
+    def setvalue(self, v):
         self.value = v
 
-    def returnValue(self):
+    def returnvalue(self):
         return self.value
 
-    def setID(self,id):
+    def setid(self, id):
         self.ID = id
 
-    def returnID(self):
+    def returnid(self):
         return self.ID
 
-    def setKeyWord(self,kw):
+    def setkeyword(self, kw):
         self.keyword = kw
 
-    def returnKeyWord(self):
+    def returnkeyword(self):
         return self.keyword
 
-    @classmethod
-    def __str__(self):
-        print("VALUE: " + self.returnValue() + "\nID: " + self.returnID() + "\nKEYWORD: " + self.returnKeyWord())
+#    @classmethod
+#    def __str__(self):
+#        print("VALUE: " + self.returnValue() + "\nID: " + self.returnID() + "\nKEYWORD: " + self.returnKeyWord())
