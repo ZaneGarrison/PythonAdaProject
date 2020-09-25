@@ -1,3 +1,3 @@
 from token import Token
 
-token = Token("+",307,"add")
+add = Token("+", 307, "add")

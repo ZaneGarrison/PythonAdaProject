@@ -1,11 +1,11 @@
 class Token:
-    def __int__(self, value, id, keyword):
+    def __init__(self, value, id, keyword):
         self.value = value
         self.ID = id
         self.keyword = keyword
 
     def setvalue(self, v):
-        self.value = v
+        value = v
 
     def returnvalue(self):
         return self.value
@@ -22,6 +22,5 @@ class Token:
     def returnkeyword(self):
         return self.keyword
 
-#    @classmethod
-#    def __str__(self):
-#        print("VALUE: " + self.returnValue() + "\nID: " + self.returnID() + "\nKEYWORD: " + self.returnKeyWord())
+
+
