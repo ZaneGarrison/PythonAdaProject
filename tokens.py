@@ -1,4 +1,4 @@
-class Token:
+class Tokens:
     def __init__(self, value, id, keyword):
         self.value = value
         self.ID = id
