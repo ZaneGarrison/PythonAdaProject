@@ -1,4 +1,5 @@
 import logging
+import os
 
 
 class Tokens:
@@ -67,8 +68,10 @@ class Scanner:
     # constructor
     def __init__(self):
         try:
-            self.outputFileName = "output.txt"
-            self.inputFileName = "test1.jl"
+            assumedFile = os.path.realpath(__file__)
+            assumedFile = assumedFile[:assumedFile.rfind('/') + 1]
+            self.outputFileName = assumedFile+"output.txt"
+            self.inputFileName = assumedFile+"test1.jl"
             # set up the input and output files as well as the buffered writer for writing to an output file
             # input file mut be in the same directory as the package
             self.inputFile = open(self.inputFileName)
@@ -247,4 +250,5 @@ class Scanner:
             keyword = PRINT_FUNCTION.returnkeyword()
 
 
-Scanner()
+s = Scanner()
+s.getTokens()
