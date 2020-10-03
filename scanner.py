@@ -64,3 +64,14 @@ try:
     testFile = open("test5.jl", "r")
 except FileNotFoundError:
     logging.critical("The file was not found")
+
+def search(token):
+    currentCode = -1
+    keyword = ""
+
+    if a:
+        #code
+    elif b:
+        #code
+    else:
+        #code
