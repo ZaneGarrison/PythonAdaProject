@@ -71,7 +71,7 @@ class Scanner:
             assumedFile = os.path.realpath(__file__)
             assumedFile = assumedFile[:assumedFile.rfind('/') + 1]
             self.outputFileName = assumedFile + "output.txt"
-            self.inputFileName = assumedFile + "test1.jl"
+            self.inputFileName = assumedFile + "test3.jl"
             # set up the input and output files as well as the buffered writer for writing to an output file
             # input file mut be in the same directory as the package
             self.inputFile = open(self.inputFileName)
@@ -155,97 +155,97 @@ class Scanner:
         if str(BEGIN_KEYWORD.returnvalue()).lower() == str(tokens).lower():
             currentCode = BEGIN_KEYWORD.returnid()
             keyword = BEGIN_KEYWORD.returnkeyword()
-        elif str(END_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(END_KEYWORD.returnvalue()).lower() == str(tokens).lower():
             currentCode = END_KEYWORD.returnid()
             keyword = END_KEYWORD.returnkeyword()
-        elif str(WHILE_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(WHILE_KEYWORD.returnvalue()).lower() == str(tokens).lower():
             currentCode = WHILE_KEYWORD.returnid()
             keyword = WHILE_KEYWORD.returnkeyword()
-        elif str(IF_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(IF_KEYWORD.returnvalue()).lower() == str(tokens).lower():
             currentCode = IF_KEYWORD.returnid()
             keyword = IF_KEYWORD.returnkeyword()
-        elif str(ELSE_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(ELSE_KEYWORD.returnvalue()).lower() == str(tokens).lower():
             currentCode = ELSE_KEYWORD.returnid()
             keyword = ELSE_KEYWORD.returnkeyword()
-        elif str(ELSEIF_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(ELSEIF_KEYWORD.returnvalue()).lower() == str(tokens).lower():
             currentCode = ELSEIF_KEYWORD.returnid()
             keyword = ELSEIF_KEYWORD.returnkeyword()
-        elif str(FOR_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(FOR_KEYWORD.returnvalue()).lower() == str(tokens).lower():
             currentCode = FOR_KEYWORD.returnid()
             keyword = FOR_KEYWORD.returnkeyword()
-        elif str(RETURN_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(RETURN_KEYWORD.returnvalue()).lower() == str(tokens).lower():
             currentCode = RETURN_KEYWORD.returnid()
             keyword = RETURN_KEYWORD.returnkeyword()
-        elif str(BREAK_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(BREAK_KEYWORD.returnvalue()).lower() == str(tokens).lower():
             currentCode = BREAK_KEYWORD.returnid()
             keyword = BREAK_KEYWORD.returnkeyword()
-        elif str(CONTINUE_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(CONTINUE_KEYWORD.returnvalue()).lower() == str(tokens).lower():
             currentCode = CONTINUE_KEYWORD.returnid()
             keyword = CONTINUE_KEYWORD.returnkeyword()
-        elif str(FUNCTION_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(FUNCTION_KEYWORD.returnvalue()).lower() == str(tokens).lower():
             currentCode = FUNCTION_KEYWORD.returnid()
             keyword = FUNCTION_KEYWORD.returnkeyword()
-        elif str(ASSIGNMENT_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(ASSIGNMENT_OPERATOR.returnvalue()).lower() == str(tokens).lower():
             currentCode = ASSIGNMENT_OPERATOR.returnid()
             keyword = ASSIGNMENT_OPERATOR.returnkeyword()
-        elif str(LE_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(LE_OPERATOR.returnvalue()).lower() == str(tokens).lower():
             currentCode = LE_OPERATOR.returnid()
             keyword = LE_OPERATOR.returnkeyword()
-        elif str(LT_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(LT_OPERATOR.returnvalue()).lower() == str(tokens).lower():
             currentCode = LT_OPERATOR.returnid()
             keyword = LT_OPERATOR.returnkeyword()
-        elif str(GE_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(GE_OPERATOR.returnvalue()).lower() == str(tokens).lower():
             currentCode = GE_OPERATOR.returnid()
             keyword = GE_OPERATOR.returnkeyword()
-        elif str(GT_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(GT_OPERATOR.returnvalue()).lower() == str(tokens).lower():
             currentCode = GT_OPERATOR.returnid()
             keyword = GT_OPERATOR.returnkeyword()
-        elif str(EQ_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(EQ_OPERATOR.returnvalue()).lower() == str(tokens).lower():
             currentCode = EQ_OPERATOR.returnid()
             keyword = EQ_OPERATOR.returnkeyword()
-        elif str(NE_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(NE_OPERATOR.returnvalue()).lower() == str(tokens).lower():
             currentCode = NE_OPERATOR.returnid()
             keyword = NE_OPERATOR.returnkeyword()
-        elif str(ADD_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(ADD_OPERATOR.returnvalue()).lower() == str(tokens).lower():
             currentCode = ADD_OPERATOR.returnid()
             keyword = ADD_OPERATOR.returnkeyword()
-        elif str(SUB_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(SUB_OPERATOR.returnvalue()).lower() == str(tokens).lower():
             currentCode = SUB_OPERATOR.returnid()
             keyword = SUB_OPERATOR.returnkeyword()
-        elif str(MUL_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(MUL_OPERATOR.returnvalue()).lower() == str(tokens).lower():
             currentCode = BEGIN_KEYWORD.returnid()
             keyword = BEGIN_KEYWORD.returnkeyword()
-        elif str(DIV_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(DIV_OPERATOR.returnvalue()).lower() == str(tokens).lower():
             currentCode = DIV_OPERATOR.returnid()
             keyword = DIV_OPERATOR.returnkeyword()
-        elif str(MOD_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(MOD_OPERATOR.returnvalue()).lower() == str(tokens).lower():
             currentCode = MOD_OPERATOR.returnid()
             keyword = MOD_OPERATOR.returnkeyword()
-        elif str(REV_DIV_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(REV_DIV_OPERATOR.returnvalue()).lower() == str(tokens).lower():
             currentCode = REV_DIV_OPERATOR.returnid()
             keyword = REV_DIV_OPERATOR.returnkeyword()
-        elif str(EXP_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(EXP_OPERATOR.returnvalue()).lower() == str(tokens).lower():
             currentCode = EXP_OPERATOR.returnid()
             keyword = EXP_OPERATOR.returnkeyword()
-        elif str(EACH_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(EACH_OPERATOR.returnvalue()).lower() == str(tokens).lower():
             currentCode = EACH_OPERATOR.returnid()
             keyword = EACH_OPERATOR.returnkeyword()
-        elif str(LEFT_PARENTHESIS.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(LEFT_PARENTHESIS.returnvalue()).lower() == str(tokens).lower():
             currentCode = LEFT_PARENTHESIS.returnid()
             keyword = LEFT_PARENTHESIS.returnkeyword()
-        elif str(RIGHT_PARENTHESIS.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(RIGHT_PARENTHESIS.returnvalue()).lower() == str(tokens).lower():
             currentCode = RIGHT_PARENTHESIS.returnid()
             keyword = RIGHT_PARENTHESIS.returnkeyword()
-        elif str(IDENTIFIER.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(IDENTIFIER.returnvalue()).lower() == str(tokens).lower():
             currentCode = IDENTIFIER.returnid()
             keyword = IDENTIFIER.returnkeyword()
-        elif str(INT_LITERAL.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(INT_LITERAL.returnvalue()).lower() == str(tokens).lower():
             currentCode = INT_LITERAL.returnid()
             keyword = INT_LITERAL.returnkeyword()
-        elif str(FLOAT_LITERAL.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(FLOAT_LITERAL.returnvalue()).lower() == str(tokens).lower():
             currentCode = FLOAT_LITERAL.returnid()
             keyword = FLOAT_LITERAL.returnkeyword()
-        elif str(PRINT_FUNCTION.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        elif str(PRINT_FUNCTION.returnvalue()).lower() == str(tokens).lower():
             currentCode = PRINT_FUNCTION.returnid()
             keyword = PRINT_FUNCTION.returnkeyword()
 
