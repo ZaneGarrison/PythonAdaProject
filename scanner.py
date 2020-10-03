@@ -111,12 +111,13 @@ class Scanner:
     def readInputFile(self):
         # set up string for holding file contents as well as the buffered reader
         data = ""
-        br = open(self.inputFile)
+        br = self.inputFile
         # //used to read file line by line
         line = br.readline()
         # //read file line by line
-        while ((line == br.readLine()) != None):
-            data += line + " "
+        while line in br.readLine():
+            if line != None:
+                data += line + " "
 
         # //splits the String by white space except where it is between quotation marks, also splits string by brackets to seperate the brackets out, and commas
 
