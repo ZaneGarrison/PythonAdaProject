@@ -65,13 +65,54 @@ try:
 except FileNotFoundError:
     logging.critical("The file was not found")
 
-def search(token):
+
+
+def search(tokens):
     currentCode = -1
     keyword = ""
 
-    if a:
-        #code
-    elif b:
-        #code
-    else:
-        #code
+    if str(BEGIN_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        currentCode = BEGIN_KEYWORD.returnid()
+        keyword = BEGIN_KEYWORD.returnkeyword()
+    elif str(END_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        currentCode = END_KEYWORD.returnid()
+        keyword = END_KEYWORD.returnkeyword()
+    elif str(END_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        currentCode = END_KEYWORD.returnid()
+        keyword = END_KEYWORD.returnkeyword()
+    elif str(WHILE_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        currentCode = WHILE_KEYWORD.returnid()
+        keyword = WHILE_KEYWORD.returnkeyword()
+    elif str(IF_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        currentCode = IF_KEYWORD.returnid()
+        keyword = IF_KEYWORD.returnkeyword()
+    elif str(ELSE_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        currentCode = ELSE_KEYWORD.returnid()
+        keyword = ELSE_KEYWORD.returnkeyword()
+    elif str(FOR_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        currentCode = FOR_KEYWORD.returnid()
+        keyword = FOR_KEYWORD.returnkeyword()
+    elif str(RETURN_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        currentCode = RETURN_KEYWORD.returnid()
+        keyword = RETURN_KEYWORD.returnkeyword()
+    elif str(BREAK_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        currentCode = BREAK_KEYWORD.returnid()
+        keyword = BREAK_KEYWORD.returnkeyword()
+    elif str(CONTINUE_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        currentCode = CONTINUE_KEYWORD.returnid()
+        keyword = CONTINUE_KEYWORD.returnkeyword()
+    elif str(FUNCTION_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        currentCode = FUNCTION_KEYWORD.returnid()
+        keyword = FUNCTION_KEYWORD.returnkeyword()
+    elif str(ASSIGNMENT_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        currentCode = ASSIGNMENT_OPERATOR.returnid()
+        keyword = ASSIGNMENT_OPERATOR.returnkeyword()
+    elif str(LE_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        currentCode = LE_OPERATOR.returnid()
+        keyword = LE_OPERATOR.returnkeyword()
+    elif str(LT_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        currentCode = LT_OPERATOR.returnid()
+        keyword = LT_OPERATOR.returnkeyword()
+    elif str(GE_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        currentCode = GE_OPERATOR.returnid()
+        keyword = GE_OPERATOR.returnkeyword()
