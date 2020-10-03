@@ -92,7 +92,7 @@ class Scanner:
             # iterate through every string
             for s in data:
                 # call the lookup function which will determine the token type and return the appropriate output message
-                tokenList.add(self.search(s))
+                tokenList.append(self.search(s))
                 # System.out.println(s);
 
             for t in tokenList:
@@ -113,9 +113,9 @@ class Scanner:
         data = ""
         br = self.inputFile
         # //used to read file line by line
-        line = br.readline()
+        #line = br.readlines()
         # //read file line by line
-        for line in br.readLine():
+        for line in br.readlines():
             if line != None:
                 data += line + " "
 
@@ -129,7 +129,7 @@ class Scanner:
         # //convert string array into an arraylist
         list1 = stringArray
         # //remove all excess whitespace that may be left over from the split
-        list1 = [data for data in list1 if len(data.trim()) > 0]
+        list1 = [data for data in list1 if len(data.strip()) > 0]
         return list1
 
     # checks whether a string is an integer number or not
@@ -152,7 +152,7 @@ class Scanner:
         currentCode = -1
         keyword = ""
 
-        if str(BEGIN_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+        if str(BEGIN_KEYWORD.returnvalue()).lower() == str(tokens).lower():
             currentCode = BEGIN_KEYWORD.returnid()
             keyword = BEGIN_KEYWORD.returnkeyword()
         elif str(END_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
