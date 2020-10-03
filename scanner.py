@@ -54,11 +54,12 @@ EXP_OPERATOR = Tokens("^", 313, "exp_operator")
 EACH_OPERATOR = Tokens(":", 314, "each_operator")
 LEFT_PARENTHESIS = Tokens("(", 315, "left_parenthesis")
 RIGHT_PARENTHESIS = Tokens(")", 316, "right_parenthesis")
-
 IDENTIFIER = Tokens("", 200, "identifier")
 INT_LITERAL = Tokens("", 201, "int_literal")
 FLOAT_LITERAL = Tokens("", 202, "float_literal")
 PRINT_FUNCTION = Tokens("print", 500, "print_function")
+
+logging.basicConfig(filename='ADAdebug')
 
 try:
     testFile = open("test5.jl", "r")
@@ -72,12 +73,12 @@ class Scanner:
     def __init__(self):
         try:
             self.outputFileName = "output.txt"
-            self.inputFileName = "test5.jl"
-            # set up the input and output files as well as the buffered writter for writing to an output file
+            self.inputFileName = "test1.jl"
+            # set up the input and output files as well as the buffered writer for writing to an output file
             # input file mut be in the same directory as the package
-            self.inputFile = open(inputFileName)
-            self.outputFile = open(outputFileName)
-            self.bw = open(outputFileName)
+            self.inputFile = open(self.inputFileName)
+            self.outputFile = open(self.outputFileName)
+            self.bw = open(self.outputFileName)
             self.variables = None
 
 
@@ -89,12 +90,12 @@ class Scanner:
         tokenList = []
         try:
             # initialize Arraylist to hold tokens
-            data = readInputFile()
+            data = self.readInputFile()
 
             # iterate through every string
             for s in data:
                 # call the lookup function which will determine the token type and return the appropriate output message
-                tokenList.add(lookup(s))
+                tokenList.add(self.search(s))
                 # System.out.println(s);
 
             for t in tokenList:
@@ -149,16 +150,13 @@ class Scanner:
     def isIdentifier(self, s):
         return (not s.contains("(") or not s.contains(")")) and (not s.startsWith("\"") or not s.endsWith("\""))
 
-    def search(tokens):
+    def search(self, tokens):
         currentCode = -1
         keyword = ""
 
         if str(BEGIN_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
             currentCode = BEGIN_KEYWORD.returnid()
             keyword = BEGIN_KEYWORD.returnkeyword()
-        elif str(END_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
-            currentCode = END_KEYWORD.returnid()
-            keyword = END_KEYWORD.returnkeyword()
         elif str(END_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
             currentCode = END_KEYWORD.returnid()
             keyword = END_KEYWORD.returnkeyword()
@@ -171,6 +169,9 @@ class Scanner:
         elif str(ELSE_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
             currentCode = ELSE_KEYWORD.returnid()
             keyword = ELSE_KEYWORD.returnkeyword()
+        elif str(ELSEIF_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+            currentCode = ELSEIF_KEYWORD.returnid()
+            keyword = ELSEIF_KEYWORD.returnkeyword()
         elif str(FOR_KEYWORD.returnvalue()).lower() == str(tokens.returnvalue()).lower():
             currentCode = FOR_KEYWORD.returnid()
             keyword = FOR_KEYWORD.returnkeyword()
@@ -198,15 +199,15 @@ class Scanner:
         elif str(GE_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
             currentCode = GE_OPERATOR.returnid()
             keyword = GE_OPERATOR.returnkeyword()
-        elif str(NE_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower:
-            currentCode = NE_OPERATOR.returnid()
-            keyword = NE_OPERATOR.returnkeyword()
         elif str(GT_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
             currentCode = GT_OPERATOR.returnid()
             keyword = GT_OPERATOR.returnkeyword()
         elif str(EQ_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
             currentCode = EQ_OPERATOR.returnid()
             keyword = EQ_OPERATOR.returnkeyword()
+        elif str(NE_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+            currentCode = NE_OPERATOR.returnid()
+            keyword = NE_OPERATOR.returnkeyword()
         elif str(ADD_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
             currentCode = ADD_OPERATOR.returnid()
             keyword = ADD_OPERATOR.returnkeyword()
@@ -214,11 +215,20 @@ class Scanner:
             currentCode = SUB_OPERATOR.returnid()
             keyword = SUB_OPERATOR.returnkeyword()
         elif str(MUL_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
-            currentCode = MUL_OPERATOR.returnid()
-            keyword = MUL_OPERATOR.returnkeyword()
+            currentCode = BEGIN_KEYWORD.returnid()
+            keyword = BEGIN_KEYWORD.returnkeyword()
         elif str(DIV_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
             currentCode = DIV_OPERATOR.returnid()
             keyword = DIV_OPERATOR.returnkeyword()
+        elif str(MOD_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+            currentCode = MOD_OPERATOR.returnid()
+            keyword = MOD_OPERATOR.returnkeyword()
+        elif str(REV_DIV_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+            currentCode = REV_DIV_OPERATOR.returnid()
+            keyword = REV_DIV_OPERATOR.returnkeyword()
+        elif str(EXP_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+            currentCode = EXP_OPERATOR.returnid()
+            keyword = EXP_OPERATOR.returnkeyword()
         elif str(EACH_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
             currentCode = EACH_OPERATOR.returnid()
             keyword = EACH_OPERATOR.returnkeyword()
@@ -228,9 +238,16 @@ class Scanner:
         elif str(RIGHT_PARENTHESIS.returnvalue()).lower() == str(tokens.returnvalue()).lower():
             currentCode = RIGHT_PARENTHESIS.returnid()
             keyword = RIGHT_PARENTHESIS.returnkeyword()
-        elif str(MOD_OPERATOR.returnvalue()).lower() == str(tokens.returnvalue()).lower():
-            currentCode = MOD_OPERATOR.returnid()
-            keyword = MOD_OPERATOR.returnkeyword()
+        elif str(IDENTIFIER.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+            currentCode = IDENTIFIER.returnid()
+            keyword = IDENTIFIER.returnkeyword()
+        elif str(INT_LITERAL.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+            currentCode = INT_LITERAL.returnid()
+            keyword = INT_LITERAL.returnkeyword()
+        elif str(FLOAT_LITERAL.returnvalue()).lower() == str(tokens.returnvalue()).lower():
+            currentCode = FLOAT_LITERAL.returnid()
+            keyword = FLOAT_LITERAL.returnkeyword()
         elif str(PRINT_FUNCTION.returnvalue()).lower() == str(tokens.returnvalue()).lower():
             currentCode = PRINT_FUNCTION.returnid()
             keyword = PRINT_FUNCTION.returnkeyword()
+
