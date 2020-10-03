@@ -61,11 +61,6 @@ PRINT_FUNCTION = Tokens("print", 500, "print_function")
 
 logging.basicConfig(filename='ADAdebug')
 
-try:
-    testFile = open("test5.jl", "r")
-except FileNotFoundError:
-    logging.critical("The file was not found")
-
 
 class Scanner:
 
@@ -251,3 +246,5 @@ class Scanner:
             currentCode = PRINT_FUNCTION.returnid()
             keyword = PRINT_FUNCTION.returnkeyword()
 
+
+Scanner()
