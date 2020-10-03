@@ -115,7 +115,7 @@ class Scanner:
         # //used to read file line by line
         line = br.readline()
         # //read file line by line
-        while line in br.readLine():
+        for line in br.readLine():
             if line != None:
                 data += line + " "
 
