@@ -10,16 +10,25 @@ class Tokens:
     def returnvalue(self):
         return self.value
 
+    def getValue(self):
+        return self.value
+
     def setid(self, id):
         self.ID = id
 
     def returnid(self):
         return self.ID
 
+    def getTypeID(self):
+        return self.ID
+
     def setkeyword(self, kw):
         self.keyword = kw
 
     def returnkeyword(self):
+        return self.keyword
+
+    def getKeyword(self):
         return self.keyword
 
 

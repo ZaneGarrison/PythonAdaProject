@@ -1,5 +1,5 @@
 import logging
-import os
+
 from tokens import *
 
 logging.basicConfig(filename='ADAdebug')
@@ -32,7 +32,7 @@ class Scanner:
         except Exception as ex:
             logging.log('error', ex)
 
-    def getTokens(self):
+    def getTokens(self, returnTokens=None):
 
         tokenList = []
         try:
@@ -42,7 +42,10 @@ class Scanner:
             # iterate through every string
             for s in data:
                 # call the lookup function which will determine the token type and return the appropriate output message
-                tokenList.append(self.search(s))
+                if returnTokens is None:
+                    tokenList.append(self.search(s))
+                else:
+                    tokenList.append(self.searchToken(s))
                 # System.out.println(s);
 
             for t in tokenList:
@@ -67,7 +70,7 @@ class Scanner:
 
         # //read file line by line
         for line in br.readlines():
-            print(line)
+            # print(line)
             if line != None:
                 data += line + " "
         # //splits the String by white space except where it is between quotation marks, also splits string by brackets to seperate the brackets out, and commas
@@ -82,7 +85,7 @@ class Scanner:
         list1 = [broken for data in list1 for broken in data.split(' ')]
         # //remove all excess whitespace that may be left over from the split
         list1 = [temp for temp in list1 if len(temp.strip()) > 0]
-        print(list1)
+        # print(list1)
         return list1
 
     # checks whether a string is an integer number or not
@@ -215,6 +218,88 @@ class Scanner:
 
         return [currentCode, keyword]
 
+    def searchToken(self, tokens):
+        currentCode = -1
 
-s = Scanner("test1.jl")
-print(s.getTokens())
+        if str(BEGIN_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+            currentCode = BEGIN_KEYWORD
+        elif str(END_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+            currentCode = END_KEYWORD
+        elif str(WHILE_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+            currentCode = WHILE_KEYWORD
+        elif str(IF_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+            currentCode = IF_KEYWORD
+        elif str(ELSE_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+            currentCode = ELSE_KEYWORD
+        elif str(ELSEIF_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+            currentCode = ELSEIF_KEYWORD
+        elif str(FOR_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+            currentCode = FOR_KEYWORD
+        elif str(RETURN_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+            currentCode = RETURN_KEYWORD
+        elif str(BREAK_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+            currentCode = BREAK_KEYWORD
+        elif str(CONTINUE_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+            currentCode = CONTINUE_KEYWORD
+        elif str(FUNCTION_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+            currentCode = FUNCTION_KEYWORD
+        elif str(ASSIGNMENT_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+            currentCode = ASSIGNMENT_OPERATOR
+        elif str(LE_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+            currentCode = LE_OPERATOR
+        elif str(LT_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+            currentCode = LT_OPERATOR
+        elif str(GE_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+            currentCode = GE_OPERATOR
+        elif str(GT_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+            currentCode = GT_OPERATOR
+        elif str(EQ_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+            currentCode = EQ_OPERATOR
+        elif str(NE_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+            currentCode = NE_OPERATOR
+        elif str(ADD_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+            currentCode = ADD_OPERATOR
+        elif str(SUB_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+            currentCode = SUB_OPERATOR
+        elif str(MUL_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+            currentCode = BEGIN_KEYWORD
+        elif str(DIV_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+            currentCode = DIV_OPERATOR
+        elif str(MOD_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+            currentCode = MOD_OPERATOR
+        elif str(REV_DIV_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+            currentCode = REV_DIV_OPERATOR
+        elif str(EXP_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+            currentCode = EXP_OPERATOR
+        elif str(EACH_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+            currentCode = EACH_OPERATOR
+        elif str(LEFT_PARENTHESIS.returnvalue()).lower() in str(tokens).lower():
+            currentCode = LEFT_PARENTHESIS
+        elif str(RIGHT_PARENTHESIS.returnvalue()).lower() in str(tokens).lower():
+            currentCode = RIGHT_PARENTHESIS
+        elif str(tokens).lower().isidentifier():
+            currentCode = IDENTIFIER
+            currentCode = Tokens(str(tokens).lower(), currentCode.getTypeID(), currentCode.getKeyword())
+        elif str(tokens).lower().isdigit():
+            currentCode = INT_LITERAL
+            currentCode = Tokens(str(tokens).lower(), currentCode.getTypeID(), currentCode.getKeyword())
+        elif self.isfloat(str(tokens).lower()):
+            currentCode = FLOAT_LITERAL
+            currentCode = Tokens(str(tokens).lower(), currentCode.getTypeID(), currentCode.getKeyword())
+        elif str(PRINT_FUNCTION.returnvalue()).lower() in str(tokens).lower():
+            currentCode = PRINT_FUNCTION
+        else:
+            logging.error('The lookup function was unable to process. \n' + str(
+                tokens).lower() + "\nPlease find the missing element.")
+
+        return currentCode
+
+
+#s = Scanner("test1.jl")
+#(s.getTokens())
+# s = Scanner("test2.jl")
+# print(s.getTokens())
+# s = Scanner("test3.jl")
+# print(s.getTokens())
+# s = Scanner("test4.jl")
+# print(s.getTokens())
