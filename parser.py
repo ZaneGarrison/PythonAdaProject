@@ -12,7 +12,7 @@ class Parser():
         self.idIntHolder = None
         self.hasFunction = False
 
-        self.analyser = Scanner("test4.jl")
+        self.analyser = Scanner("test1.jl")
         temp = self.analyser.getTokens(returnTokens=True)
         for data in temp:
             self.tokens.append(data)
