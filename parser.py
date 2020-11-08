@@ -1,3 +1,10 @@
+# Class: CS4308 Section 2
+# Term: Fall 2020
+# Names: Sam Klein, Zane Garrison, James Perdue
+# Instructor: Deepa Murlidhar
+# Project: Deliverable 2 Parser - Python
+
+
 from tokens import *
 from scanner import Scanner
 from binaryTree import *
@@ -400,3 +407,5 @@ class Parser():
 
 test = Parser()
 test.parse()
+s = Scanner("test5.jl")
+print(s.getTokens())
