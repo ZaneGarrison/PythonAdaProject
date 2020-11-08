@@ -12,7 +12,7 @@ class Parser():
         self.idIntHolder = None
         self.hasFunction = False
 
-        self.analyser = Scanner("test1.jl")
+        self.analyser = Scanner("test5.jl")
         temp = self.analyser.getTokens(returnTokens=True)
         for data in temp:
             self.tokens.append(data)
@@ -76,7 +76,7 @@ class Parser():
         self.lex()
         ##determine what type of expression is next
         ##if it is a for loop expression I.E 5 : 10
-        if (self.tokens[0].getTypeID() == EACH_OPERATOR.getTypeID()):
+        if (len(self.tokens) > 0 and self.tokens[0].getTypeID() == EACH_OPERATOR.getTypeID()):
             self.forExpression()
         ##normal arithmetic expressions
         else:
@@ -121,8 +121,8 @@ class Parser():
             self.parseTreeRoot = self.addToParseTree(self.parseTreeRoot, self.nextToken)
             # determine if the token after this one will be an int or each operator
             # to determine the output format so it looks consistent and cleaner
-            if (self.tokens[0].getTypeID() == INT_LITERAL.getTypeID() or
-                    self.tokens[0].getTypeID() == EACH_OPERATOR.getTypeID()):
+            if (len(self.tokens) > 0 and self.tokens[0].getTypeID() == INT_LITERAL.getTypeID() or
+                    len(self.tokens) > 0 and self.tokens[0].getTypeID() == EACH_OPERATOR.getTypeID()):
                 print("<" + self.nextToken.getKeyword() + ">")
             else:
                 print("<" + self.nextToken.getKeyword() + ">")
@@ -234,7 +234,7 @@ class Parser():
                 self.lex()
         else:
             # iterate through the tokens
-            while not (len(self.tokens) < 1):
+            while (len(self.tokens) > 0):
                 if ((self.nextToken.getTypeID() == IDENTIFIER.getTypeID()) or
                         (self.nextToken.getTypeID() == INT_LITERAL.getTypeID()) or
                         (self.nextToken.getTypeID() == IF_KEYWORD.getTypeID()) or

@@ -295,8 +295,8 @@ class Scanner:
         return currentCode
 
 
-#s = Scanner("test1.jl")
-#(s.getTokens())
+s = Scanner("test5.jl")
+(s.getTokens())
 # s = Scanner("test2.jl")
 # print(s.getTokens())
 # s = Scanner("test3.jl")
