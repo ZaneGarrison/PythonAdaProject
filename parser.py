@@ -12,14 +12,13 @@ class Parser():
         self.idIntHolder = None
         self.hasFunction = False
 
-        self.analyser = Scanner("test5.jl")
+        self.analyser = Scanner("test1.jl")
         temp = self.analyser.getTokens(returnTokens=True)
         for data in temp:
             self.tokens.append(data)
         self.nextToken = self.tokens.pop(0)
 
     def parse(self):
-        print(self.nextToken.returnkeyword())
         if self.nextToken.getTypeID() == FUNCTION_KEYWORD.getTypeID():
             self.hasFunction = True
             self.function()
@@ -28,7 +27,7 @@ class Parser():
 
     def statement(self):
         print("<statement>")
-        print("<statement>->")
+        print("<statement>->", end=' ')
         if (
                 self.nextToken.getTypeID() == IDENTIFIER.getTypeID() or self.nextToken.getTypeID() == INT_LITERAL.getTypeID()):
             self.idIntHolder = self.nextToken
@@ -55,6 +54,8 @@ class Parser():
 
         self.printInOrderValueToKeyword(self.parseTreeRoot)
         self.printPreOrder(self.parseTreeRoot)
+        print()
+        self.printPostOrder(self.parseTreeRoot)
         print('\n')
         self.addToParseTreeList()
 
@@ -62,10 +63,10 @@ class Parser():
     def parseAssignment(self):
         # output assignment statement form
         print("<assignment_statement>")
-        print("<assignment_statement>->")
+        print("<assignment_statement>->", end=' ')
         # output variable keyword that would be on the left hand side of the assignment statement
         print("<" + self.idIntHolder.getKeyword() + ">")
-        print("<" + self.idIntHolder.getValue() + ">")
+        #print("<" + self.idIntHolder.getValue() + ">")
         # add it to the parse tree
         self.parseTreeRoot = self.addToParseTree(self.parseTreeRoot, self.idIntHolder)
 
@@ -86,7 +87,7 @@ class Parser():
     def arithmeticExpression(self):
         # output statements
         print("<arithmetic_expression>")
-        print("<arithmetic_expression>->")
+        print("<arithmetic_expression>->", end='')
         # if the nextToken is an operator
         if (self.nextToken.getTypeID() == ADD_OPERATOR.getTypeID() or
                 self.nextToken.getTypeID() == SUB_OPERATOR.getTypeID() or
@@ -131,7 +132,7 @@ class Parser():
     def forExpression(self):
         # output for expression statements
         print("<for_expresssion>")
-        print("<for_expression>->")
+        print("<for_expression>->", end='')
         # syntax check
         if (self.nextToken.getTypeID() == IDENTIFIER.getTypeID() or
                 self.nextToken.getTypeID() == INT_LITERAL.getTypeID()):
@@ -155,7 +156,7 @@ class Parser():
     # handles parsing boolean expressions for if statements and while loops
     def booleanExpression(self):
         print("<boolean_expression>")
-        print("<boolean_expression>->")
+        print("<boolean_expression>->", end='')
         # determine if next token is a boolean operator
         if (self.nextToken.getTypeID() == LE_OPERATOR.getTypeID() or
                 self.nextToken.getTypeID() == LT_OPERATOR.getTypeID() or
@@ -197,7 +198,7 @@ class Parser():
     def function(self):
         # output function statment
         print("<function>")
-        print("<function>->")
+        print("<function>->", end=' ')
         self.lex()
         if (self.nextToken.getTypeID() != IDENTIFIER.getTypeID()):
             self.error("Error missing function name")
@@ -218,7 +219,7 @@ class Parser():
 
     def block(self):
         print("<block>")
-        print("<block>->")
+        print("<block>->", end='')
         # determine when to stop iterating
         if (self.hasFunction):
             # iterate through the tokens
@@ -248,7 +249,7 @@ class Parser():
     # parses the ulia print function
     def parsePrintFunction(self):
         # output print_function statement
-        print("<" + self.nextToken.getKeyword() + ">->")
+        print("<" + self.nextToken.getKeyword() + ">->", end='')
         # move to the next token
         self.lex()
         # syntax check
@@ -271,7 +272,7 @@ class Parser():
     def parseIf(self):
         # output if statement bnf form
         print("<if_statement>")
-        print("<if_statement>->")
+        print("<if_statement>->", end='')
         # move to the next token
         self.lex()
 
@@ -280,6 +281,8 @@ class Parser():
         # print the boolean expression
         self.printInOrderValueToKeyword(self.parseTreeRoot)
         self.printPreOrder(self.parseTreeRoot)
+        print()
+        self.printPostOrder(self.parseTreeRoot)
         print()
         self.addToParseTreeList()
         # move to the nexr token
@@ -295,7 +298,7 @@ class Parser():
         # parse the else statements
         if (self.nextToken.getTypeID() == ELSE_KEYWORD.getTypeID()):
             print("<else_statement>")
-            print("<else_statement>->")
+            print("<else_statement>->", end='')
             self.parseTreeRoot = self.addToParseTree(self.parseTreeRoot, self.nextToken)
             while (self.nextToken.getTypeID() != END_KEYWORD.getTypeID() and
                    not (len(self.tokens) < 1)):
@@ -310,7 +313,7 @@ class Parser():
     def parseWhile(self):
         # output while statement in bnf form
         print("<while_statement>")
-        print("<while_statement>->")
+        print("<while_statement>->", end='')
         # move to the next token
         self.lex()
         # parse the boolean expressionS
@@ -318,6 +321,8 @@ class Parser():
         # output boolean expression
         self.printInOrderValueToKeyword(self.parseTreeRoot)
         self.printPreOrder(self.parseTreeRoot)
+        print()
+        self.printPostOrder(self.parseTreeRoot)
         print()
         self.addToParseTreeList()
         # move to the next token
@@ -336,7 +341,7 @@ class Parser():
     def parseFor(self):
         # output for statement in bnf form
         print("<for_statement>")
-        print("<for_statement>->")
+        print("<for_statement>->", end='')
         # move to the next token
         self.lex()
         # check for syntax error
@@ -365,16 +370,26 @@ class Parser():
         if root is None:
             return
         self.printInOrderValueToKeyword(root.getLeftChild())
-        print(root.getValue().returnvalue() + "->")
+        print(root.getValue().returnvalue() + " ->", end='')
         print(root.getValue().returnkeyword())
         self.printInOrderValueToKeyword(root.getRightChild())
+
 
     def printPreOrder(self, root):
         if root is None:
             return
-        print(root.getValue().getValue() + " ")
+        print(root.getValue().getValue() + " ", end= ' ')
         self.printPreOrder(root.getLeftChild())
         self.printPreOrder(root.getRightChild())
+
+
+    def printPostOrder(self, root):
+        if root is None:
+            return
+        print(root.getValue().getValue() + " ", end= ' ')
+        self.printPostOrder(root.getRightChild())
+        self.printPostOrder(root.getLeftChild())
+
 
     def addToParseTreeList(self):
         self.parseTrees.append(self.parseTreeRoot)
