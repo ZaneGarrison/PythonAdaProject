@@ -69,8 +69,9 @@ class Scanner:
         ## //used to read file line by line
 
         # //read file line by line
+        print('code: ')
         for line in br.readlines():
-
+            print(line)
             if line != None:
                 data += line + " "
         # //splits the String by white space except where it is between quotation marks, also splits string by brackets to seperate the brackets out, and commas
@@ -85,8 +86,6 @@ class Scanner:
         list1 = [broken for data in list1 for broken in data.split(' ')]
         # //remove all excess whitespace that may be left over from the split
         list1 = [temp for temp in list1 if len(temp.strip()) > 0]
-        print('Code: ')
-        print( ' '.join(list1) )
         print()
         return list1
 
