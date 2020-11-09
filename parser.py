@@ -13,12 +13,16 @@ class Parser():
         self.hasFunction = False
 
         self.analyser = Scanner("test5.jl")
+        print('code: ')
         temp = self.analyser.getTokens(returnTokens=True)
         for data in temp:
             self.tokens.append(data)
         self.nextToken = self.tokens.pop(0)
 
     def parse(self):
+        print(self.analyser.code)
+        s = Scanner("test5.jl")
+        print(s.getTokens())
         print('Parser Output:')
         print()
         if self.nextToken.getTypeID() == FUNCTION_KEYWORD.getTypeID():
@@ -400,3 +404,5 @@ class Parser():
 
 test = Parser()
 test.parse()
+
+
