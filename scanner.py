@@ -178,8 +178,8 @@ class Scanner:
             currentCode = SUB_OPERATOR.returnid()
             keyword = SUB_OPERATOR.returnkeyword()
         elif str(MUL_OPERATOR.returnvalue()).lower() in str(tokens).lower():
-            currentCode = BEGIN_KEYWORD.returnid()
-            keyword = BEGIN_KEYWORD.returnkeyword()
+            currentCode = MUL_OPERATOR.returnid()
+            keyword = MUL_OPERATOR.returnkeyword()
         elif str(DIV_OPERATOR.returnvalue()).lower() in str(tokens).lower():
             currentCode = DIV_OPERATOR.returnid()
             keyword = DIV_OPERATOR.returnkeyword()
@@ -263,7 +263,7 @@ class Scanner:
         elif str(SUB_OPERATOR.returnvalue()).lower() in str(tokens).lower():
             currentCode = SUB_OPERATOR
         elif str(MUL_OPERATOR.returnvalue()).lower() in str(tokens).lower():
-            currentCode = BEGIN_KEYWORD
+            currentCode = MUL_OPERATOR
         elif str(DIV_OPERATOR.returnvalue()).lower() in str(tokens).lower():
             currentCode = DIV_OPERATOR
         elif str(MOD_OPERATOR.returnvalue()).lower() in str(tokens).lower():
