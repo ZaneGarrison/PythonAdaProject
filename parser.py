@@ -21,8 +21,10 @@ class Parser():
 
     def parse(self):
         print(self.analyser.code)
+        print()
         s = Scanner("test5.jl")
-        print(s.getTokens())
+        s.getTokens()
+        print()
         print('Parser Output:')
         print()
         if self.nextToken.getTypeID() == FUNCTION_KEYWORD.getTypeID():
@@ -59,10 +61,10 @@ class Parser():
             self.parseFor()
 
         self.printInOrderValueToKeyword(self.parseTreeRoot)
-        self.printPreOrder(self.parseTreeRoot)
-        print()
-        self.printPostOrder(self.parseTreeRoot)
-        print('\n')
+        #self.printPreOrder(self.parseTreeRoot)
+        #print()
+        #self.printPostOrder(self.parseTreeRoot)
+        #print('\n')
         self.addToParseTreeList()
 
     # parses assignment statements into BNF form also works with for loop assignment expressions
@@ -126,13 +128,7 @@ class Parser():
                 self.nextToken.getTypeID() == INT_LITERAL.getTypeID()):
             # add the token to the parse tree
             self.parseTreeRoot = self.addToParseTree(self.parseTreeRoot, self.nextToken)
-            # determine if the token after this one will be an int or each operator
-            # to determine the output format so it looks consistent and cleaner
-            if (len(self.tokens) > 0 and self.tokens[0].getTypeID() == INT_LITERAL.getTypeID() or
-                    len(self.tokens) > 0 and self.tokens[0].getTypeID() == EACH_OPERATOR.getTypeID()):
-                print("<" + self.nextToken.getKeyword() + ">")
-            else:
-                print("<" + self.nextToken.getKeyword() + ">")
+            print("<" + self.nextToken.getKeyword() + ">")
 
     # used with for epressions in the form of for x = 5:10
     def forExpression(self):

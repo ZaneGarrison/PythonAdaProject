@@ -39,26 +39,33 @@ class Scanner:
         try:
             # initialize Arraylist to hold tokens
             data = self.readInputFile()
+            count = 1
 
             # iterate through every string
             for s in data:
                 # call the lookup function which will determine the token type and return the appropriate output message
                 if returnTokens is None:
-                    tokenList.append(self.search(s))
+                    tokenList.append(self.search(s[0], s[1]))
                 else:
-                    tokenList.append(self.searchToken(s))
-                # System.out.println(s);
+                    temp = self.searchToken(s[0])
+                    temp.setRow(s[1])
+                    tokenList.append(temp)
 
+
+
+
+            valuesToPrint = []
             for t in tokenList:
-                pass
-                # System.out.println(t.toString());
+                valuesToPrint.append(f"Line Number: {t[3]}\t Lexeme: {t[0]}\t Token: {t[1]}\t ID:{t[2]}")
+
+            print('\n'.join(valuesToPrint))
 
             # close the output file
             self.bw.close()
 
 
         except Exception as ex:
-            logging.log('error', ex)
+            logging.log(1, ex)
         # print(data)
 
         return tokenList
@@ -84,9 +91,18 @@ class Scanner:
 
         # //convert string array into an arraylist
         list1 = str(stringArray[0]).split('\n')
-        list1 = [broken for data in list1 for broken in data.split(' ')]
+
+        # list1 = [[broken,index] for data in list1 for broken in data.split(' ') for index in range(0,len(data.split(' ')))]
+        count = 0
+        list2 = []
+        for data in list1:
+            for broken in data.split(' '):
+                list2.append([broken, count])
+            count += 1
+
         # //remove all excess whitespace that may be left over from the split
-        list1 = [temp for temp in list1 if len(temp.strip()) > 0]
+        list1 = [temp for temp in list2 if len(temp[0].strip()) > 0]
+
         return list1
 
     # checks whether a string is an integer number or not
@@ -112,10 +128,10 @@ class Scanner:
     def isIdentifier(self, s):
         return (not s.contains("(") or not s.contains(")")) and (not s.startsWith("\"") or not s.endsWith("\""))
 
-    def search(self, tokens):
+    def search(self, tokens, row):
         currentCode = -1
         keyword = ""
-        # print(tokens)
+        currentToken = tokens
 
         if str(BEGIN_KEYWORD.returnvalue()).lower() in str(tokens).lower():
             currentCode = BEGIN_KEYWORD.returnid()
@@ -178,8 +194,8 @@ class Scanner:
             currentCode = SUB_OPERATOR.returnid()
             keyword = SUB_OPERATOR.returnkeyword()
         elif str(MUL_OPERATOR.returnvalue()).lower() in str(tokens).lower():
-            currentCode = BEGIN_KEYWORD.returnid()
-            keyword = BEGIN_KEYWORD.returnkeyword()
+            currentCode = MUL_OPERATOR.returnid()
+            keyword = MUL_OPERATOR.returnkeyword()
         elif str(DIV_OPERATOR.returnvalue()).lower() in str(tokens).lower():
             currentCode = DIV_OPERATOR.returnid()
             keyword = DIV_OPERATOR.returnkeyword()
@@ -201,6 +217,9 @@ class Scanner:
         elif str(RIGHT_PARENTHESIS.returnvalue()).lower() in str(tokens).lower():
             currentCode = RIGHT_PARENTHESIS.returnid()
             keyword = RIGHT_PARENTHESIS.returnkeyword()
+        elif str(PRINT_FUNCTION.returnvalue()).lower() in str(tokens).lower():
+            currentCode = PRINT_FUNCTION.returnid()
+            keyword = PRINT_FUNCTION.returnkeyword()
         elif str(tokens).lower().isidentifier():
             currentCode = IDENTIFIER.returnid()
             keyword = IDENTIFIER.returnkeyword()
@@ -210,14 +229,11 @@ class Scanner:
         elif self.isfloat(str(tokens).lower()):
             currentCode = FLOAT_LITERAL.returnid()
             keyword = FLOAT_LITERAL.returnkeyword()
-        elif str(PRINT_FUNCTION.returnvalue()).lower() in str(tokens).lower():
-            currentCode = PRINT_FUNCTION.returnid()
-            keyword = PRINT_FUNCTION.returnkeyword()
         else:
             logging.error('The lookup function was unable to process. \n' + str(
                 tokens).lower() + "\nPlease find the missing element.")
 
-        return [currentCode, keyword]
+        return [currentToken, currentCode, keyword, row]
 
     def searchToken(self, tokens):
         currentCode = -1
@@ -263,7 +279,7 @@ class Scanner:
         elif str(SUB_OPERATOR.returnvalue()).lower() in str(tokens).lower():
             currentCode = SUB_OPERATOR
         elif str(MUL_OPERATOR.returnvalue()).lower() in str(tokens).lower():
-            currentCode = BEGIN_KEYWORD
+            currentCode = MUL_OPERATOR
         elif str(DIV_OPERATOR.returnvalue()).lower() in str(tokens).lower():
             currentCode = DIV_OPERATOR
         elif str(MOD_OPERATOR.returnvalue()).lower() in str(tokens).lower():
@@ -278,6 +294,8 @@ class Scanner:
             currentCode = LEFT_PARENTHESIS
         elif str(RIGHT_PARENTHESIS.returnvalue()).lower() in str(tokens).lower():
             currentCode = RIGHT_PARENTHESIS
+        elif str(PRINT_FUNCTION.returnvalue()).lower() in str(tokens).lower():
+            currentCode = PRINT_FUNCTION
         elif str(tokens).lower().isidentifier():
             currentCode = IDENTIFIER
             currentCode = Tokens(str(tokens).lower(), currentCode.getTypeID(), currentCode.getKeyword())
@@ -287,17 +305,15 @@ class Scanner:
         elif self.isfloat(str(tokens).lower()):
             currentCode = FLOAT_LITERAL
             currentCode = Tokens(str(tokens).lower(), currentCode.getTypeID(), currentCode.getKeyword())
-        elif str(PRINT_FUNCTION.returnvalue()).lower() in str(tokens).lower():
-            currentCode = PRINT_FUNCTION
         else:
             logging.error('The lookup function was unable to process. \n' + str(
                 tokens).lower() + "\nPlease find the missing element.")
 
-        return currentCode
+        temp = Tokens(str(tokens).lower(), currentCode.getTypeID(), currentCode.getKeyword())
+        return temp
 
-
-#s = Scanner("test1.jl")
-#print(s.getTokens())
+# s = Scanner("test1.jl")
+# print(s.getTokens())
 # s = Scanner("test2.jl")
 # print(s.getTokens())
 # s = Scanner("test3.jl")

@@ -3,6 +3,7 @@ class Tokens:
         self.value = value
         self.ID = id
         self.keyword = keyword
+        self.row = -1
 
     def setvalue(self, v):
         value = v
@@ -31,6 +32,11 @@ class Tokens:
     def getKeyword(self):
         return self.keyword
 
+    def getRow(self):
+        return self.row
+
+    def setRow(self, kw):
+        self.row = kw
 
 BEGIN_KEYWORD = Tokens("begin", 100, "begin_keyword")
 END_KEYWORD = Tokens("end", 101, "end_keyword")
