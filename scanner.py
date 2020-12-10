@@ -39,24 +39,23 @@ class Scanner:
         try:
             # initialize Arraylist to hold tokens
             data = self.readInputFile()
-            count = 1
 
             # iterate through every string
             for s in data:
                 # call the lookup function which will determine the token type and return the appropriate output message
                 if returnTokens is None:
-                    tokenList.append(self.search(s[0], s[1]))
+                    temp = self.search(s[0])
+                    tokenList.append(self.search(s[0]))
                 else:
                     temp = self.searchToken(s[0])
                     temp.setRow(s[1])
                     tokenList.append(temp)
-
-
-
+                # System.out.println(s);
 
             valuesToPrint = []
+            print('\n'.join([f"{hold[0]}:{hold[1]}" for hold in data]))
             for t in tokenList:
-                valuesToPrint.append(f"Line Number: {t[3]}\t Lexeme: {t[0]}\t Token: {t[1]}\t ID:{t[2]}")
+                valuesToPrint.append(f"Line Number: {t[3]}\t Lexeme: {t[2]}\t Token: {t[1]}\t ID:{t[0]}")
 
             print('\n'.join(valuesToPrint))
 
@@ -96,8 +95,10 @@ class Scanner:
         count = 0
         list2 = []
         for data in list1:
-            for broken in data.split(' '):
-                list2.append([broken, count])
+            if '--' not in data:
+                for broken in data.split(' '):
+                    if len(broken) > 0:
+                        list2.append([broken, count])
             count += 1
 
         # //remove all excess whitespace that may be left over from the split
@@ -128,10 +129,11 @@ class Scanner:
     def isIdentifier(self, s):
         return (not s.contains("(") or not s.contains(")")) and (not s.startsWith("\"") or not s.endsWith("\""))
 
-    def search(self, tokens, row):
+    def search(self, tokens):
         currentCode = -1
         keyword = ""
-        currentToken = tokens
+        # print(tokens)
+        # print(tokens)
 
         if str(BEGIN_KEYWORD.returnvalue()).lower() in str(tokens).lower():
             currentCode = BEGIN_KEYWORD.returnid()
@@ -166,6 +168,9 @@ class Scanner:
         elif str(FUNCTION_KEYWORD.returnvalue()).lower() in str(tokens).lower():
             currentCode = FUNCTION_KEYWORD.returnid()
             keyword = FUNCTION_KEYWORD.returnkeyword()
+        elif str(DECLARE_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+            currentCode = DECLARE_OPERATOR.returnid()
+            keyword = DECLARE_OPERATOR.returnkeyword()
         elif str(ASSIGNMENT_OPERATOR.returnvalue()).lower() in str(tokens).lower():
             currentCode = ASSIGNMENT_OPERATOR.returnid()
             keyword = ASSIGNMENT_OPERATOR.returnkeyword()
@@ -217,103 +222,114 @@ class Scanner:
         elif str(RIGHT_PARENTHESIS.returnvalue()).lower() in str(tokens).lower():
             currentCode = RIGHT_PARENTHESIS.returnid()
             keyword = RIGHT_PARENTHESIS.returnkeyword()
-        elif str(PRINT_FUNCTION.returnvalue()).lower() in str(tokens).lower():
-            currentCode = PRINT_FUNCTION.returnid()
-            keyword = PRINT_FUNCTION.returnkeyword()
+        elif len(tokens) > 1 and str(tokens)[:-1].lower().isidentifier():
+            currentCode = IDENTIFIER.returnid()
+            keyword = IDENTIFIER.returnkeyword()
         elif str(tokens).lower().isidentifier():
             currentCode = IDENTIFIER.returnid()
             keyword = IDENTIFIER.returnkeyword()
+        elif len(tokens) > 1 and str(tokens).lower().isidentifier() != True:
+            currentCode = KEYWORD.returnid()
+            keyword = KEYWORD.returnkeyword()
         elif str(tokens).lower().isdigit():
             currentCode = INT_LITERAL.returnid()
             keyword = INT_LITERAL.returnkeyword()
         elif self.isfloat(str(tokens).lower()):
             currentCode = FLOAT_LITERAL.returnid()
             keyword = FLOAT_LITERAL.returnkeyword()
+        elif str(PRINT_FUNCTION.returnvalue()).lower() in str(tokens).lower():
+            currentCode = PRINT_FUNCTION.returnid()
+            keyword = PRINT_FUNCTION.returnkeyword()
         else:
+            print(tokens)
+            print('token failed')
+            # raise Exception
             logging.error('The lookup function was unable to process. \n' + str(
                 tokens).lower() + "\nPlease find the missing element.")
 
-        return [currentToken, currentCode, keyword, row]
+        return [currentCode, keyword]
 
-    def searchToken(self, tokens):
+    def searchToken(self, bitches):
         currentCode = -1
 
-        if str(BEGIN_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+        if str(BEGIN_KEYWORD.returnvalue()).lower() in str(bitches).lower():
             currentCode = BEGIN_KEYWORD
-        elif str(END_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+        elif str(END_KEYWORD.returnvalue()).lower() in str(bitches).lower():
             currentCode = END_KEYWORD
-        elif str(WHILE_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+        elif str(WHILE_KEYWORD.returnvalue()).lower() in str(bitches).lower():
             currentCode = WHILE_KEYWORD
-        elif str(IF_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+        elif str(IF_KEYWORD.returnvalue()).lower() in str(bitches).lower():
             currentCode = IF_KEYWORD
-        elif str(ELSE_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+        elif str(ELSE_KEYWORD.returnvalue()).lower() in str(bitches).lower():
             currentCode = ELSE_KEYWORD
-        elif str(ELSEIF_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+        elif str(ELSEIF_KEYWORD.returnvalue()).lower() in str(bitches).lower():
             currentCode = ELSEIF_KEYWORD
-        elif str(FOR_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+        elif str(FOR_KEYWORD.returnvalue()).lower() in str(bitches).lower():
             currentCode = FOR_KEYWORD
-        elif str(RETURN_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+        elif str(RETURN_KEYWORD.returnvalue()).lower() in str(bitches).lower():
             currentCode = RETURN_KEYWORD
-        elif str(BREAK_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+        elif str(BREAK_KEYWORD.returnvalue()).lower() in str(bitches).lower():
             currentCode = BREAK_KEYWORD
-        elif str(CONTINUE_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+        elif str(CONTINUE_KEYWORD.returnvalue()).lower() in str(bitches).lower():
             currentCode = CONTINUE_KEYWORD
-        elif str(FUNCTION_KEYWORD.returnvalue()).lower() in str(tokens).lower():
+        elif str(FUNCTION_KEYWORD.returnvalue()).lower() in str(bitches).lower():
             currentCode = FUNCTION_KEYWORD
-        elif str(ASSIGNMENT_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+        elif str(ASSIGNMENT_OPERATOR.returnvalue()).lower() in str(bitches).lower():
             currentCode = ASSIGNMENT_OPERATOR
-        elif str(LE_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+        elif str(LE_OPERATOR.returnvalue()).lower() in str(bitches).lower():
             currentCode = LE_OPERATOR
-        elif str(LT_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+        elif str(LT_OPERATOR.returnvalue()).lower() in str(bitches).lower():
             currentCode = LT_OPERATOR
-        elif str(GE_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+        elif str(GE_OPERATOR.returnvalue()).lower() in str(bitches).lower():
             currentCode = GE_OPERATOR
-        elif str(GT_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+        elif str(GT_OPERATOR.returnvalue()).lower() in str(bitches).lower():
             currentCode = GT_OPERATOR
-        elif str(EQ_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+        elif str(EQ_OPERATOR.returnvalue()).lower() in str(bitches).lower():
             currentCode = EQ_OPERATOR
-        elif str(NE_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+        elif str(NE_OPERATOR.returnvalue()).lower() in str(bitches).lower():
             currentCode = NE_OPERATOR
-        elif str(ADD_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+        elif str(ADD_OPERATOR.returnvalue()).lower() in str(bitches).lower():
             currentCode = ADD_OPERATOR
-        elif str(SUB_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+        elif str(SUB_OPERATOR.returnvalue()).lower() in str(bitches).lower():
             currentCode = SUB_OPERATOR
-        elif str(MUL_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+        elif str(MUL_OPERATOR.returnvalue()).lower() in str(bitches).lower():
             currentCode = MUL_OPERATOR
-        elif str(DIV_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+        elif str(DIV_OPERATOR.returnvalue()).lower() in str(bitches).lower():
             currentCode = DIV_OPERATOR
-        elif str(MOD_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+        elif str(MOD_OPERATOR.returnvalue()).lower() in str(bitches).lower():
             currentCode = MOD_OPERATOR
-        elif str(REV_DIV_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+        elif str(REV_DIV_OPERATOR.returnvalue()).lower() in str(bitches).lower():
             currentCode = REV_DIV_OPERATOR
-        elif str(EXP_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+        elif str(EXP_OPERATOR.returnvalue()).lower() in str(bitches).lower():
             currentCode = EXP_OPERATOR
-        elif str(EACH_OPERATOR.returnvalue()).lower() in str(tokens).lower():
+        elif str(EACH_OPERATOR.returnvalue()).lower() in str(bitches).lower():
             currentCode = EACH_OPERATOR
-        elif str(LEFT_PARENTHESIS.returnvalue()).lower() in str(tokens).lower():
+        elif str(LEFT_PARENTHESIS.returnvalue()).lower() in str(bitches).lower():
             currentCode = LEFT_PARENTHESIS
-        elif str(RIGHT_PARENTHESIS.returnvalue()).lower() in str(tokens).lower():
+        elif str(RIGHT_PARENTHESIS.returnvalue()).lower() in str(bitches).lower():
             currentCode = RIGHT_PARENTHESIS
-        elif str(PRINT_FUNCTION.returnvalue()).lower() in str(tokens).lower():
+        elif str(PRINT_FUNCTION.returnvalue()).lower() in str(bitches).lower():
             currentCode = PRINT_FUNCTION
-        elif str(tokens).lower().isidentifier():
+        elif str(bitches).lower().isidentifier():
             currentCode = IDENTIFIER
-            currentCode = Tokens(str(tokens).lower(), currentCode.getTypeID(), currentCode.getKeyword())
-        elif str(tokens).lower().isdigit():
+            currentCode = Tokens(str(bitches).lower(), currentCode.getTypeID(), currentCode.getKeyword())
+        elif str(bitches).lower().isdigit():
             currentCode = INT_LITERAL
-            currentCode = Tokens(str(tokens).lower(), currentCode.getTypeID(), currentCode.getKeyword())
-        elif self.isfloat(str(tokens).lower()):
+            currentCode = Tokens(str(bitches).lower(), currentCode.getTypeID(), currentCode.getKeyword())
+        elif self.isfloat(str(bitches).lower()):
             currentCode = FLOAT_LITERAL
-            currentCode = Tokens(str(tokens).lower(), currentCode.getTypeID(), currentCode.getKeyword())
+            currentCode = Tokens(str(bitches).lower(), currentCode.getTypeID(), currentCode.getKeyword())
+
         else:
             logging.error('The lookup function was unable to process. \n' + str(
-                tokens).lower() + "\nPlease find the missing element.")
+                bitches).lower() + "\nPlease find the missing element.")
 
-        temp = Tokens(str(tokens).lower(), currentCode.getTypeID(), currentCode.getKeyword())
+        temp = Tokens(str(bitches).lower(), currentCode.getTypeID(), currentCode.getKeyword())
         return temp
 
-# s = Scanner("test1.jl")
-# print(s.getTokens())
+
+s = Scanner("programs.adb")
+print(s.getTokens())
 # s = Scanner("test2.jl")
 # print(s.getTokens())
 # s = Scanner("test3.jl")
